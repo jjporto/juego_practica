@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Memoria</title>
+    <link rel="stylesheet" href="Estilo_juego.css">
+</head>
+<body>
+    <div class="game-controls">
+        <button id="start-btn">Empezar Juego</button>
+        <div>
+            <span>Intentos: </span><span id="attempts">0</span>
+        </div>
+        <div>
+            <span>Tiempo: </span><span id="timer">0</span> segundos
+        </div>
+        <div>
+            <span>Aciertos: </span><span id="matches">0</span> <!-- Contador de aciertos -->
+        </div>
+    </div>
+
+    <div id="game-board" class="board"></div>
+
+    <script src="Cartas.js"></script>
+</body>
+</html>
