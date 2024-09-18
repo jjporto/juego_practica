@@ -32,21 +32,22 @@
 
     <script src="Cartas.js"></script>
 
-    <!-- Script para verificar si DevTools están abiertas -->
-    <script type="module">
-        import devtools from './node_modules/devtools-detect/index.js';
+    <!-- Script para detectar si las DevTools están abiertas -->
+    <script>
+        function detectDevTools() {
+            const threshold = 160; // Umbral de altura o ancho del viewport que podría indicar DevTools abierta
 
-        // Verifica si las DevTools están abiertas al cargar la página
-        if (devtools.isOpen) {
-            window.location.href = 'about:blank'; // Redirigir a página en blanco si están abiertas
+            // Comprobación del tamaño de la ventana
+            if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
+                window.location.href = 'about:blank'; // Redirigir a una página en blanco si las DevTools están abiertas
+            }
         }
 
-        // Escucha cambios cuando las DevTools se abren o cierran
-        window.addEventListener('devtoolschange', event => {
-            if (event.detail.isOpen) {
-                window.location.href = 'about:blank'; // Redirigir a página en blanco cuando se abren
-            }
-        });
+        // Comprobación inicial al cargar la página
+        detectDevTools();
+
+        // Escucha cambios de tamaño de la ventana para detectar la apertura de DevTools
+        window.onresize = detectDevTools;
     </script>
 
     <script>
