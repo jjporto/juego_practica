@@ -7,21 +7,37 @@
     <link rel="stylesheet" href="Estilo_juego.css">
 </head>
 <body>
-    <div class="game-controls">
-        <button id="start-btn">Empezar Juego</button>
-        <div>
-            <span>Intentos: </span><span id="attempts">0</span>
-        </div>
-        <div>
-            <span>Tiempo: </span><span id="timer">0</span> segundos
-        </div>
-        <div>
-            <span>Aciertos: </span><span id="matches">0</span> <!-- Contador de aciertos -->
-        </div>
+    <!-- Pantalla de inicio -->
+    <div id="start-screen" class="start-screen">
+        <h1>Juego de Memoria</h1>
+        <button id="start-game-btn">Comenzar</button>
     </div>
 
-    <div id="game-board" class="board"></div>
+    <!-- Controles y tablero del juego, ocultos inicialmente -->
+    <div id="game-container" class="game-container" style="display: none;">
+        <div class="game-controls">
+            <button id="start-btn">Reiniciar Juego</button>
+            <div>
+                <span>Intentos: </span><span id="attempts">0</span>
+            </div>
+            <div>
+                <span>Tiempo: </span><span id="timer">0</span> segundos
+            </div>
+            <div>
+                <span>Aciertos: </span><span id="matches">0</span>
+            </div>
+        </div>
+        <div id="game-board" class="board"></div>
+    </div>
 
     <script src="Cartas.js"></script>
+
+    <script>
+        // Mostrar el tablero al hacer clic en "Comenzar"
+        document.getElementById('start-game-btn').addEventListener('click', function() {
+            document.getElementById('start-screen').style.display = 'none'; // Ocultar pantalla de inicio
+            document.getElementById('game-container').style.display = 'block'; // Mostrar tablero de juego
+        });
+    </script>
 </body>
 </html>
