@@ -37,6 +37,11 @@ document.addEventListener("DOMContentLoaded", () => {
         startGame(); // Iniciar el juego al hacer clic en "Comenzar"
     });
 
+    // Agregar funcionalidad al botón de reinicio
+    startBtn.addEventListener('click', function() {
+        startGame(); // Reiniciar el juego al hacer clic en "Reiniciar Juego"
+    });
+
     // Función para comenzar el juego
     function startGame() {
         board.innerHTML = ''; // Limpiar el tablero al comenzar
