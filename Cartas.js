@@ -1,22 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Se obtienen los elementos del DOM para manipularlos más adelante
     const board = document.getElementById('game-board');
     const attemptsElement = document.getElementById('attempts');
     const timerElement = document.getElementById('timer');
-    const matchesElement = document.getElementById('matches'); // Elemento del contador de aciertos
+    const matchesElement = document.getElementById('matches');
     const startBtn = document.getElementById('start-btn');
+    const startGameBtn = document.getElementById('start-game-btn'); // Botón de "Comenzar" en la pantalla de inicio
 
-    // Variables para controlar el estado del juego
-    let firstCard = null;  // Primera carta seleccionada
-    let secondCard = null; // Segunda carta seleccionada
-    let lockBoard = false; // Bloqueo de tablero mientras se verifican cartas
-    let attempts = 0;      // Contador de intentos
-    let pairsFound = 0;    // Contador de pares encontrados
-    let matches = 0;       // Contador de aciertos (pares correctos)
-    let timer;             // Variable para el temporizador
-    let seconds = 0;       // Contador de segundos
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
+    let attempts = 0;
+    let pairsFound = 0;
+    let matches = 0;
+    let timer;
+    let seconds = 0;
 
-    // Array con las imágenes que representan las cartas, en pares
     const imagesArray = [
         { name: 'Azul1.jpg', code: "azul" }, { name: 'Azul2.jpg', code: "azul" },
         { name: 'aguila1-copia.jpg', code: "rojo" }, { name: 'aguila1.jpg', code: "rojo" },
@@ -32,127 +30,113 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: 'naranja2.jpg', code: "naranja" }, { name: 'naranja1.jpg', code: "naranja" }
     ];
 
-    // Se agrega un evento al botón de "Empezar Juego"
-    startBtn.addEventListener('click', startGame);
+    // Mostrar el tablero de juego al hacer clic en "Comenzar" en la pantalla de inicio
+    startGameBtn.addEventListener('click', function() {
+        document.getElementById('start-screen').style.display = 'none'; // Ocultar la pantalla de inicio
+        document.getElementById('game-container').style.display = 'block'; // Mostrar el tablero de juego
+        startGame(); // Iniciar el juego al hacer clic en "Comenzar"
+    });
 
-    // Función para iniciar el juego
+    // Función para comenzar el juego
     function startGame() {
-        // Reiniciar el estado del tablero y variables de control
-        board.innerHTML = '';              // Vaciar el tablero
-        attempts = 0;                      // Reiniciar contador de intentos
-        matches = 0;                       // Reiniciar contador de aciertos
+        board.innerHTML = ''; // Limpiar el tablero al comenzar
+        attempts = 0;
+        matches = 0;
+        pairsFound = 0;
+        seconds = 0;
         attemptsElement.textContent = attempts;
         matchesElement.textContent = matches;
-        pairsFound = 0;                    // Reiniciar contador de pares encontrados
-        seconds = 0;                       // Reiniciar contador de tiempo
         timerElement.textContent = seconds;
 
-        // Mezclar el array de imágenes
+        // Mezclar las imágenes de forma aleatoria
         shuffleArray(imagesArray);
 
         // Crear las cartas en el tablero
         imagesArray.forEach((image, index) => {
             const card = document.createElement('div');
-            card.classList.add('card');    // Añadir clase de carta
-            card.dataset.image = image.code;    // Guardar el código de la imagen para la comparación
-            card.dataset.index = index;    // Guardar el índice como atributo de la carta
-            card.addEventListener('click', flipCard); // Añadir evento para voltear la carta
+            card.classList.add('card');
+            card.dataset.image = image.code;
+            card.dataset.index = index;
+            card.addEventListener('click', flipCard);
 
-            const img = document.createElement('img'); // Crear imagen para la carta
-            img.src = `images/${image.name}`; // Asignar la ruta de la imagen
-            card.appendChild(img); // Añadir la imagen al elemento carta
+            const img = document.createElement('img');
+            img.src = `images/${image.name}`;
+            img.style.display = 'none'; // Ocultar la imagen hasta que se voltee la carta
+            card.appendChild(img);
 
-            board.appendChild(card); // Añadir la carta al tablero
+            board.appendChild(card);
         });
 
         // Iniciar el temporizador
-        clearInterval(timer); // Reiniciar cualquier temporizador anterior
+        clearInterval(timer);
         timer = setInterval(() => {
-            seconds++; // Incrementar los segundos
-            timerElement.textContent = seconds; // Mostrar el tiempo en pantalla
-        }, 1000); // Actualizar cada segundo
+            seconds++;
+            timerElement.textContent = seconds;
+        }, 1000);
     }
 
-    // Función para voltear la carta seleccionada
     function flipCard() {
-        // Si el tablero está bloqueado o la carta ya está volteada, no hacer nada
         if (lockBoard || this === firstCard || this.classList.contains('matched')) return;
 
-        this.classList.add('flipped'); // Voltear la carta
+        this.classList.add('flipped');
+        const img = this.querySelector('img');
+        img.style.display = 'block'; // Mostrar la imagen al voltear la carta
 
-        // Si no hay una primera carta seleccionada, asignar esta carta como la primera
         if (!firstCard) {
             firstCard = this;
         } else {
-            // Si ya hay una primera carta seleccionada, asignar la segunda y bloquear el tablero
             secondCard = this;
             lockBoard = true;
-            checkForMatch(); // Verificar si las cartas son iguales
+            checkForMatch();
         }
     }
 
-    // Función para verificar si las dos cartas seleccionadas hacen par
     function checkForMatch() {
-        attempts++; // Incrementar el contador de intentos
+        attempts++;
         attemptsElement.textContent = attempts;
 
-        // Si las cartas coinciden
         if (firstCard.dataset.image === secondCard.dataset.image) {
-            disableCards(); // Deshabilitar las cartas (mantenerlas volteadas)
-            pairsFound++;   // Incrementar el número de pares encontrados
-            matches++;      // Incrementar el contador de aciertos
-            matchesElement.textContent = matches; // Mostrar aciertos en pantalla
+            disableCards();
+            pairsFound++;
+            matches++;
+            matchesElement.textContent = matches;
 
-            // Si se han encontrado todos los pares
             if (pairsFound === Math.floor(imagesArray.length / 2)) {
-                clearInterval(timer); // Detener el temporizador
-                // Mostrar alerta con los resultados
+                clearInterval(timer);
                 setTimeout(() => alert(`¡Ganaste en ${attempts} intentos, con ${matches} aciertos y ${seconds} segundos!`), 500);
             }
         } else {
-            // Si las cartas no coinciden, voltearlas de nuevo
             unflipCards();
         }
     }
 
-    // Función para deshabilitar las cartas que hacen par (dejarlas volteadas)
     function disableCards() {
-        if (firstCard && secondCard) {
-            firstCard.classList.add('matched'); // Añadir clase 'matched' a ambas cartas
-            secondCard.classList.add('matched');
-
-            // Desactivar clic solo si las cartas son válidas
-            firstCard.removeEventListener('click', flipCard);
-            secondCard.removeEventListener('click', flipCard);
-            resetBoard(); // Reiniciar el estado del tablero
-        }
+        firstCard.classList.add('matched');
+        secondCard.classList.add('matched');
+        firstCard.removeEventListener('click', flipCard);
+        secondCard.removeEventListener('click', flipCard);
+        resetBoard();
     }
 
-    // Función para voltear las cartas de nuevo si no hacen par
     function unflipCards() {
         setTimeout(() => {
-            if (!firstCard.classList.contains('matched')) {
-                firstCard.classList.remove('flipped'); // Voltear la primera carta de nuevo
-            }
-            if (!secondCard.classList.contains('matched')) {
-                secondCard.classList.remove('flipped'); // Voltear la segunda carta de nuevo
-            }
-            resetBoard(); // Reiniciar las variables del estado del tablero
-        }, 1000); // Voltearlas después de 1 segundo
+            firstCard.querySelector('img').style.display = 'none'; // Esconder la imagen
+            secondCard.querySelector('img').style.display = 'none'; // Esconder la imagen
+            firstCard.classList.remove('flipped');
+            secondCard.classList.remove('flipped');
+            resetBoard();
+        }, 1000);
     }
 
-    // Función para reiniciar las variables que controlan las cartas seleccionadas
     function resetBoard() {
-        [firstCard, secondCard] = [null, null]; // Eliminar referencias a las cartas seleccionadas
-        lockBoard = false; // Desbloquear el tablero
+        [firstCard, secondCard] = [null, null];
+        lockBoard = false;
     }
 
-    // Función para mezclar las cartas utilizando el algoritmo Fisher-Yates
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1)); // Obtener un índice aleatorio
-            [array[i], array[j]] = [array[j], array[i]];   // Intercambiar las posiciones
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]]; // Intercambiar las posiciones
         }
     }
-    
 });
