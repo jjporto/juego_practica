@@ -154,4 +154,5 @@ document.addEventListener("DOMContentLoaded", () => {
             [array[i], array[j]] = [array[j], array[i]];   // Intercambiar las posiciones
         }
     }
+    
 });
