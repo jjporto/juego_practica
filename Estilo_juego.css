@@ -13,10 +13,11 @@ body {
 
 .board {
     display: grid;
-    grid-template-columns: repeat(6, 100px); /* 6 columnas */
-    grid-template-rows: repeat(5, 100px); /* 5 filas */
+    grid-template-columns: repeat(6, 100px); /* 6 columnas en pantallas grandes */
+    grid-template-rows: repeat(5, 100px); /* 5 filas en pantallas grandes */
     gap: 10px;
     margin-top: 20px;
+    justify-content: center;
 }
 
 .card {
@@ -67,4 +68,54 @@ body {
 
 #start-btn:hover {
     background-color: #27ae60;
+}
+
+/* Media queries para hacer el diseño responsive */
+
+@media (max-width: 1200px) {
+    .board {
+        grid-template-columns: repeat(5, 90px); /* Cambia a 5 columnas en pantallas medianas */
+        grid-template-rows: repeat(6, 90px); /* Ajuste en filas */
+    }
+
+    .card {
+        width: 90px;
+        height: 90px;
+    }
+}
+
+@media (max-width: 992px) {
+    .board {
+        grid-template-columns: repeat(4, 80px); /* Cambia a 4 columnas en pantallas más pequeñas */
+        grid-template-rows: repeat(7, 80px); /* Ajuste en filas */
+    }
+
+    .card {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+@media (max-width: 768px) {
+    .board {
+        grid-template-columns: repeat(3, 70px); /* Cambia a 3 columnas en pantallas pequeñas */
+        grid-template-rows: repeat(8, 70px); /* Ajuste en filas */
+    }
+
+    .card {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+@media (max-width: 576px) {
+    .board {
+        grid-template-columns: repeat(2, 60px); /* Cambia a 2 columnas en pantallas muy pequeñas */
+        grid-template-rows: repeat(10, 60px); /* Ajuste en filas */
+    }
+
+    .card {
+        width: 60px;
+        height: 60px;
+    }
 }
