@@ -32,6 +32,23 @@
 
     <script src="Cartas.js"></script>
 
+    <!-- Script para verificar si DevTools están abiertas -->
+    <script type="module">
+        import devtools from './node_modules/devtools-detect/index.js';
+
+        // Verifica si las DevTools están abiertas al cargar la página
+        if (devtools.isOpen) {
+            window.location.href = 'about:blank'; // Redirigir a página en blanco si están abiertas
+        }
+
+        // Escucha cambios cuando las DevTools se abren o cierran
+        window.addEventListener('devtoolschange', event => {
+            if (event.detail.isOpen) {
+                window.location.href = 'about:blank'; // Redirigir a página en blanco cuando se abren
+            }
+        });
+    </script>
+
     <script>
         // Mostrar el tablero al hacer clic en "Comenzar"
         document.getElementById('start-game-btn').addEventListener('click', function() {

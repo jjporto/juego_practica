@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
             pairsFound++;
             matches++;
             matchesElement.textContent = matches;
-
+            //mensaje final de juego 
             if (pairsFound === Math.floor(imagesArray.length / 2)) {
                 clearInterval(timer);
                 setTimeout(() => alert(`¡Ganaste en ${attempts} intentos, con ${matches} aciertos y ${seconds} segundos!`), 500);
