@@ -22,9 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: 'https://imagegame.s3.us-east-2.amazonaws.com/dragon33.jpg', code: "dorado" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/dragon33.jpg', code: "dorado" },
         { name: 'https://imagegame.s3.us-east-2.amazonaws.com/feliz1.jpg', code: "gris" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/feliz1.jpg', code: "gris" },
         { name: 'https://imagegame.s3.us-east-2.amazonaws.com/jj1.jpg', code: "cacorro" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/jj1.jpg', code: "cacorro" },
-        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/jj1.jpg', code: "homosexual" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/jj1.jpg', code: "homosexual" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/marica1.jpg', code: "homosexual" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/marica1.jpg', code: "homosexual" },
         { name: 'https://imagegame.s3.us-east-2.amazonaws.com/morado1.jpg', code: "morado" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/morado1.jpg', code: "morado" },
-        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/rosadito1.jpg', code: "rosadito" }, { name: 'v', code: "rosadito" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/rosadito1.jpg', code: "rosadito" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/rosadito1.jpg', code: "rosadito" },
         { name: 'https://imagegame.s3.us-east-2.amazonaws.com/rosado.jpg', code: "oscuro" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/rosado.jpg', code: "oscuro" },
         { name: 'https://imagegame.s3.us-east-2.amazonaws.com/tt1.jpg', code: "amarillo" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/tt1.jpg', code: "amarillo" },
         { name: 'https://imagegame.s3.us-east-2.amazonaws.com/naranja1.jpg', code: "naranja" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/naranja1.jpg', code: "naranja" }
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
             //mensaje final de juego 
             if (pairsFound === Math.floor(imagesArray.length / 2)) {
                 clearInterval(timer);
-                setTimeout(() => alert(`¡Ganaste en ${attempts} intentos, con ${matches} aciertos y ${seconds} segundos!`), 500);
+                setTimeout(() => alert(`¡Ganaste en ${attempts} intentos, con ${matches} aciertos en ${seconds} segundos!`), 500);
             }
         } else {
             unflipCards();
