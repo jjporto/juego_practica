@@ -16,18 +16,18 @@ document.addEventListener("DOMContentLoaded", () => {
     let seconds = 0;
 
     const imagesArray = [
-        { name: 'Azul1.jpg', code: "azul" }, { name: 'Azul2.jpg', code: "azul" },
-        { name: 'aguila1-copia.jpg', code: "rojo" }, { name: 'aguila1.jpg', code: "rojo" },
-        { name: 'dino44.jpg', code: "verde" }, { name: 'dino44-copia.jpg', code: "verde" },
-        { name: 'dragon33.jpg', code: "dorado" }, { name: 'dragon33-copia.jpg', code: "dorado" },
-        { name: 'feliz1.jpg', code: "gris" }, { name: 'feliz1-copia.jpg', code: "gris" },
-        { name: 'jj1.jpg', code: "cacorro" }, { name: 'jj1-copia.jpg', code: "cacorro" },
-        { name: 'marica1.jpg', code: "homosexual" }, { name: 'marica1-copia.jpg', code: "homosexual" },
-        { name: 'morado1.jpg', code: "morado" }, { name: 'morado1-copia.jpg', code: "morado" },
-        { name: 'rosadito1.jpg', code: "rosadito" }, { name: 'rosadito1-copia.jpg', code: "rosadito" },
-        { name: 'rosado.jpg', code: "oscuro" }, { name: 'rosado.jpg', code: "oscuro" },
-        { name: 'tt1.jpg', code: "amarillo" }, { name: 'tt1-copia.jpg', code: "amarillo" },
-        { name: 'naranja2.jpg', code: "naranja" }, { name: 'naranja1.jpg', code: "naranja" }
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/aguila1.jpg', code: "azul" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/aguila1.jpg', code: "azul" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/Azul1.jpg', code: "rojo" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/Azul1.jpg', code: "rojo" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/dino44.jpg', code: "verde" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/dino44.jpg', code: "verde" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/dragon33.jpg', code: "dorado" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/dragon33.jpg', code: "dorado" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/feliz1.jpg', code: "gris" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/feliz1.jpg', code: "gris" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/jj1.jpg', code: "cacorro" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/jj1.jpg', code: "cacorro" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/jj1.jpg', code: "homosexual" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/jj1.jpg', code: "homosexual" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/morado1.jpg', code: "morado" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/morado1.jpg', code: "morado" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/rosadito1.jpg', code: "rosadito" }, { name: 'v', code: "rosadito" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/rosado.jpg', code: "oscuro" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/rosado.jpg', code: "oscuro" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/tt1.jpg', code: "amarillo" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/tt1.jpg', code: "amarillo" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/naranja1.jpg', code: "naranja" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/naranja1.jpg', code: "naranja" }
     ];
 
     // Mostrar el tablero de juego al hacer clic en "Comenzar" en la pantalla de inicio
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
             card.addEventListener('click', flipCard);
 
             const img = document.createElement('img');
-            img.src = `images/${image.name}`;
+            img.src = image.name;
             img.style.display = 'none'; // Ocultar la imagen hasta que se voltee la carta
             card.appendChild(img);
 
