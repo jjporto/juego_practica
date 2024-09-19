@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const timerElement = document.getElementById('timer');
     const matchesElement = document.getElementById('matches');
     const startBtn = document.getElementById('start-btn');
-    const startGameBtn = document.getElementById('start-game-btn'); // Botón de "Comenzar" en la pantalla de inicio
+    const startGameBtn = document.getElementById('start-game-btn'); 
 
     let firstCard = null;
     let secondCard = null;
@@ -14,37 +14,49 @@ document.addEventListener("DOMContentLoaded", () => {
     let matches = 0;
     let timer;
     let seconds = 0;
+    let cardData = []; // Aquí guardamos las respuestas en memoria, no en el HTML.
+
+    const secretKey = 'mi_clave_secreta_123'; 
 
     const imagesArray = [
-        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/aguila1.jpg', code: "azul" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/aguila1.jpg', code: "azul" },
-        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/Azul1.jpg', code: "rojo" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/Azul1.jpg', code: "rojo" },
-        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/dino44.jpg', code: "verde" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/dino44.jpg', code: "verde" },
-        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/dragon33.jpg', code: "dorado" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/dragon33.jpg', code: "dorado" },
-        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/feliz1.jpg', code: "gris" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/feliz1.jpg', code: "gris" },
-        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/jj1.jpg', code: "cacorro" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/jj1.jpg', code: "cacorro" },
-        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/marica1.jpg', code: "homosexual" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/marica1.jpg', code: "homosexual" },
-        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/morado1.jpg', code: "morado" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/morado1.jpg', code: "morado" },
-        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/rosadito1.jpg', code: "rosadito" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/rosadito1.jpg', code: "rosadito" },
-        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/rosado.jpg', code: "oscuro" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/rosado.jpg', code: "oscuro" },
-        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/tt1.jpg', code: "amarillo" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/tt1.jpg', code: "amarillo" },
-        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/naranja1.jpg', code: "naranja" }, { name: 'https://imagegame.s3.us-east-2.amazonaws.com/naranja1.jpg', code: "naranja" }
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/aguila1.jpg', code: "azul" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/aguila1.jpg', code: "azul" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/Azul1.jpg', code: "rojo" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/Azul1.jpg', code: "rojo" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/dino44.jpg', code: "verde" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/dino44.jpg', code: "verde" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/dragon33.jpg', code: "dorado" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/dragon33.jpg', code: "dorado" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/feliz1.jpg', code: "gris" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/feliz1.jpg', code: "gris" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/jj1.jpg', code: "cacorro" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/jj1.jpg', code: "cacorro" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/marica1.jpg', code: "homosexual" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/marica1.jpg', code: "homosexual" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/morado1.jpg', code: "morado" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/morado1.jpg', code: "morado" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/rosadito1.jpg', code: "rosadito" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/rosadito1.jpg', code: "rosadito" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/rosado.jpg', code: "oscuro" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/rosado.jpg', code: "oscuro" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/tt1.jpg', code: "amarillo" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/tt1.jpg', code: "amarillo" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/naranja1.jpg', code: "naranja" },
+        { name: 'https://imagegame.s3.us-east-2.amazonaws.com/naranja1.jpg', code: "naranja" }
     ];
 
-    // Mostrar el tablero de juego al hacer clic en "Comenzar" en la pantalla de inicio
     startGameBtn.addEventListener('click', function() {
-        document.getElementById('start-screen').style.display = 'none'; // Ocultar la pantalla de inicio
-        document.getElementById('game-container').style.display = 'block'; // Mostrar el tablero de juego
-        startGame(); // Iniciar el juego al hacer clic en "Comenzar"
+        document.getElementById('start-screen').style.display = 'none'; 
+        document.getElementById('game-container').style.display = 'block'; 
+        startGame(); 
     });
 
-    // Agregar funcionalidad al botón de reinicio
     startBtn.addEventListener('click', function() {
-        startGame(); // Reiniciar el juego al hacer clic en "Reiniciar Juego"
+        startGame(); 
     });
 
-    // Función para comenzar el juego
     function startGame() {
-        board.innerHTML = ''; // Limpiar el tablero al comenzar
+        board.innerHTML = ''; 
         attempts = 0;
         matches = 0;
         pairsFound = 0;
@@ -53,26 +65,29 @@ document.addEventListener("DOMContentLoaded", () => {
         matchesElement.textContent = matches;
         timerElement.textContent = seconds;
 
-        // Mezclar las imágenes de forma aleatoria
         shuffleArray(imagesArray);
 
-        // Crear las cartas en el tablero
-        imagesArray.forEach((image, index) => {
+        // Guardamos el orden de las cartas y las respuestas en memoria, no en HTML
+        cardData = imagesArray.map(image => ({
+            name: CryptoJS.AES.encrypt(image.name, secretKey).toString(), 
+            code: image.code
+        }));
+
+        // Creamos las cartas en el tablero sin las respuestas visibles
+        cardData.forEach((data, index) => {
             const card = document.createElement('div');
             card.classList.add('card');
-            card.dataset.image = image.code;
             card.dataset.index = index;
             card.addEventListener('click', flipCard);
 
             const img = document.createElement('img');
-            img.src = image.name;
-            img.style.display = 'none'; // Ocultar la imagen hasta que se voltee la carta
+            img.src = ""; // No asignamos el src todavía
+            img.style.display = 'none';
             card.appendChild(img);
 
             board.appendChild(card);
         });
 
-        // Iniciar el temporizador
         clearInterval(timer);
         timer = setInterval(() => {
             seconds++;
@@ -85,7 +100,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         this.classList.add('flipped');
         const img = this.querySelector('img');
-        img.style.display = 'block'; // Mostrar la imagen al voltear la carta
+        
+        const decryptedUrl = CryptoJS.AES.decrypt(cardData[this.dataset.index].name, secretKey).toString(CryptoJS.enc.Utf8);
+        img.src = decryptedUrl; // Desciframos y mostramos la imagen solo cuando se voltea la carta
+        img.style.display = 'block'; 
 
         if (!firstCard) {
             firstCard = this;
@@ -100,12 +118,15 @@ document.addEventListener("DOMContentLoaded", () => {
         attempts++;
         attemptsElement.textContent = attempts;
 
-        if (firstCard.dataset.image === secondCard.dataset.image) {
+        const firstCardCode = cardData[firstCard.dataset.index].code;
+        const secondCardCode = cardData[secondCard.dataset.index].code;
+
+        if (firstCardCode === secondCardCode) {
             disableCards();
             pairsFound++;
             matches++;
             matchesElement.textContent = matches;
-            //mensaje final de juego 
+
             if (pairsFound === Math.floor(imagesArray.length / 2)) {
                 clearInterval(timer);
                 setTimeout(() => alert(`¡Ganaste en ${attempts} intentos, con ${matches} aciertos en ${seconds} segundos!`), 500);
@@ -125,8 +146,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function unflipCards() {
         setTimeout(() => {
-            firstCard.querySelector('img').style.display = 'none'; // Esconder la imagen
-            secondCard.querySelector('img').style.display = 'none'; // Esconder la imagen
+            firstCard.querySelector('img').style.display = 'none'; 
+            secondCard.querySelector('img').style.display = 'none'; 
             firstCard.classList.remove('flipped');
             secondCard.classList.remove('flipped');
             resetBoard();
@@ -141,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]]; // Intercambiar las posiciones
+            [array[i], array[j]] = [array[j], array[i]]; 
         }
     }
 });
